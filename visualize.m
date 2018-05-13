@@ -34,8 +34,10 @@ n : number of 2x2 blocks, width-wise
 m : number of 2x2 blocks, height-wise
 %}
 
-function visualize(config, world, routers, adjacency, plot_title)
-eval(config);
+function visualize(world, routers, adjacency, plot_title)
+S=1;
+N=2;
+I=3;
 [height, width] = size(world);
 
 % draw cellphones
@@ -85,18 +87,18 @@ hold on;
 title(plot_title);
 xlim([0 width]);
 ylim([0 height]);
-for i=1:length(source_x)
-    line([source_x(i), dest_x(i)], [source_y(i), dest_y(i)], 'Color',[.6 .6 .6],'LineStyle','--')
-end
-plot(cell_S_x, cell_S_y, 'b.', 'markers', 10)
-plot(cell_N_x, cell_N_y, 'r.', 'markers', 10)
-plot(cell_I_x, cell_I_y, 'g.', 'markers', 10)
 plot(router_S_x, router_S_y, 'b.', 'markers', 25)
 plot(router_N_x, router_N_y, 'r.', 'markers', 25)
 plot(router_I_x, router_I_y, 'g.', 'markers', 25)
+for i=1:length(source_x)
+    line([source_x(i), dest_x(i)], [source_y(i), dest_y(i)], 'Color',[.6 .6 .6],'LineStyle','--')
+end
+plot(cell_S_x, cell_S_y, 'b.', 'markers', 15)
+plot(cell_N_x, cell_N_y, 'r.', 'markers', 15)
+plot(cell_I_x, cell_I_y, 'g.', 'markers', 15)
 set (gca,'YDir','reverse')
-yticklabels([])
-xticklabels([])
+% yticklabels([])
+% xticklabels([])
 grid on;
 hold off;
 end

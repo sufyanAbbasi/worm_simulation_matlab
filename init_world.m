@@ -33,14 +33,27 @@ C : location of a cellphone
 n : number of 2x2 blocks, width-wise
 m : number of 2x2 blocks, height-wise
 %}
-function [world_space, routers, adjacency_matrix] = init_world(config)
 
-eval(config);
+function [world_space, routers, adjacency_matrix] = init_world(n, m, C_num, C_infected, R_infected, num_edges)
+S=1;
+N=2;
+I=3;
 width = 2*n;
 height = 2*m;
 world_space = zeros(width, height);
 adjacency_matrix = zeros(n*m, n*m);
 routers = ones(n, m); % initialize all routers to suscepitble
+
+% place infected cellphones randomly in the world space
+for c=1:C_infected
+    rand_width = randi(width);
+    rand_height = randi(height);
+    while world_space(rand_width, rand_height)
+        rand_width = randi(width);
+        rand_height = randi(height);
+    end
+    world_space(rand_width, rand_height) = N;
+end
 
 % place uninfected cellphones randomly in the world space
 for c=1:C_num - C_infected
@@ -52,16 +65,7 @@ for c=1:C_num - C_infected
     end
     world_space(rand_width, rand_height) = S;
 end
-% place infected cellphones randomly in the world space
-for c=1:C_infected
-    rand_width = randi(width);
-    rand_height = randi(height);
-    while world_space(rand_width, rand_height)
-        rand_width = randi(width);
-        rand_height = randi(height);
-    end
-    world_space(rand_width, rand_height) = N;
-end
+
 
 % set R_infected number routers to infected
 for r=1:R_infected
